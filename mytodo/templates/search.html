@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}searck results {% endblock title %}
+
+{% block content %}
+     <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" class="text-danger">Date</th>
+              <th scope="col" class="text-danger">Title</th>
+              <th scope="col"class="text-danger">Description</th>
+              <th scope="col" class="text-danger">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+               {% if data %}
+            {% for s in data %}
+            <tr>
+              <th scope="row">{{s.datesubmiited}}</th>
+              <td>{{s.title}}</td>
+              <td>{{s.description}}</td>
+              <td>
+             <form action="{% url 'deletedata' s.id %}" method="post">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+             </form>
+              </td>
+            </tr>
+            {% endfor %} 
+            {% else %}
+            <td>no data found</td>
+            {% endif %} 
+          </tbody>
+        </table>
+        <a class="btn btn-success" href="/">&laquo; back to home</a>
+{% endblock content %}

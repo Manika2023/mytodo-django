@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}home{% endblock title %}
+
+{% block content %}
+<div class="alert alert-info text-center" role="alert">
+     welcome in todo list
+   </div>
+   <div class="row">
+
+   <div class="col-md-4">
+<form action="/" method="post">
+    {% csrf_token %}
+     <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="title" value="{{list.title}}" name="title" class="form-control" id="title" placeholder="add new item">
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Description</label>
+          <textarea class="form-control" id="desc" name="desc" rows="3" vlaue="{{list.description}}"></textarea>
+        </div>
+     <button type="submit" class="btn btn-primary">Add New</button>
+   </form>
+</div>
+<div class="col-md-8">
+     <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" class="text-success">Date</th>
+              <th scope="col" class="text-success">Title</th>
+              <th scope="col"class="text-success">Description</th>
+              <th scope="col" class="text-success">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if list %} 
+            {% for i in list %}
+            <tr>
+              <th scope="row">{{i.datesubmiited}}</th>
+              <td>{{i.title}}</td>
+              <td>{{i.description}}</td>
+              <td>
+             <form action="{% url 'deletedata' i.id %}" method="post">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+             </form>
+              </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+           <td><h5>no data</h5></td>
+            {% endif %}    
+          </tbody>
+        </table>
+</div>
+</div>
+{% endblock content %}
